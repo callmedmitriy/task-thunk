@@ -24,6 +24,7 @@ export default function serviceListReducer(state = initialState, action) {
       };
     case FETCH_SERVICES_FAILURE:
     case REMOVE_SERVICE_FAILTURE:
+      console.log('error');
       const {error} = action.payload;
       return {
         ...state,

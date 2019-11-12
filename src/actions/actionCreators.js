@@ -114,10 +114,18 @@ export const addService = () => async (dispatch, getState) => {
 
 export const removeService = id => async (dispatch, getState) => {
   dispatch(removeServiceRequest());
-  fetch(`http://localhost:7070/api/services/${id}`, {
-    method: 'DELETE',
-  })
-  .then(dispatch(fetchServices()))
+  try {
+    const response = await fetch(`http://localhost:7070/api/services/${id}`, {
+      method: 'DELETE',
+    });
+    console.log(response);
+    if (!response.ok) {
+      throw new Error(response.statusText)
+    }
+    dispatch(fetchServices())
+  } catch (e) {
+    dispatch(removeServiceFailture(e.message))
+  }
 /*  .then(res => res.json())
   .then(
     (result) => {
